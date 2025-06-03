@@ -1,0 +1,80 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-06-03 17:15:44.911953",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "micron_theme_setting_section",
+  "disable_new_update_popup",
+  "logo_setting_section",
+  "app_logo",
+  "theme_design_section",
+  "primary_color",
+  "secondary_color"
+ ],
+ "fields": [
+  {
+   "fieldname": "micron_theme_setting_section",
+   "fieldtype": "Section Break",
+   "label": "Micron Theme Setting"
+  },
+  {
+   "default": "0",
+   "fieldname": "disable_new_update_popup",
+   "fieldtype": "Check",
+   "label": "Disable New Update Popup"
+  },
+  {
+   "fieldname": "logo_setting_section",
+   "fieldtype": "Section Break",
+   "label": "Logo Setting"
+  },
+  {
+   "fieldname": "app_logo",
+   "fieldtype": "Attach",
+   "label": "App Logo"
+  },
+  {
+   "fieldname": "theme_design_section",
+   "fieldtype": "Section Break",
+   "label": "Theme Design"
+  },
+  {
+   "fieldname": "primary_color",
+   "fieldtype": "Data",
+   "label": "Primary Color"
+  },
+  {
+   "fieldname": "secondary_color",
+   "fieldtype": "Data",
+   "label": "Secondary Color"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2025-06-03 17:15:44.911953",
+ "modified_by": "Administrator",
+ "module": "Micron Theme",
+ "name": "Micron Theme Setting",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
