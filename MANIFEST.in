@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include micron_theme *.css
+recursive-include micron_theme *.csv
+recursive-include micron_theme *.html
+recursive-include micron_theme *.ico
+recursive-include micron_theme *.js
+recursive-include micron_theme *.json
+recursive-include micron_theme *.md
+recursive-include micron_theme *.png
+recursive-include micron_theme *.py
+recursive-include micron_theme *.svg
+recursive-include micron_theme *.txt
+recursive-exclude micron_theme *.pyc
