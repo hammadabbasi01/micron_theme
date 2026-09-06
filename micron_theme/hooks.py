@@ -11,9 +11,14 @@ app_license = "MIT"
 # ------------------
 
 # include js, css files in header of desk.html
-app_include_css = "/assets/micron_theme/css/micron_theme.css"
-# app_include_js = "/assets/micron_theme/js/micron_theme.js"
-
+app_include_css = [
+    "/assets/micron_theme/css/micron_theme.css",
+    "/assets/micron_theme/css/spark360_splash.css",
+]
+app_include_js = [
+    "/assets/micron_theme/js/micron_theme.js",
+    # "/assets/micron_theme/js/spark360_search_icon.js"
+]
 # include js, css files in header of web template
 # web_include_css = "/assets/micron_theme/css/micron_theme.css"
 # web_include_js = "/assets/micron_theme/js/micron_theme.js"

@@ -1,0 +1,131 @@
+  
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>SRP360 Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="/assets/frappe/js/lib/jquery/jquery.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+      body, html { height: 100%; background: linear-gradient(to right, #2c5364, #203a43, #0f2027); overflow: hidden; }
+      #particles-js { position: absolute; width: 100%; height: 100%; z-index: 1; }
+      .login-container {
+        position: relative; z-index: 2; height: 100%;
+        display: flex; justify-content: center; align-items: center;
+      }
+      .login-box {
+        background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);
+        border-radius: 20px; padding: 40px; width: 100%; max-width: 400px;
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        color: #fff; text-align: center;
+      }
+      .login-box h2 { margin-bottom: 30px; font-weight: bold; }
+      input {
+        width: 100%; padding: 12px 20px; margin: 10px 0;
+        border: none; border-radius: 10px; font-size: 16px;
+      }
+      .password-field {
+        position: relative;
+      }
+      .toggle-password {
+        position: absolute; left: 120px; top: 0%;
+        transform: translateY(-1%);
+        background: none; border: none; color: #ccc;
+        /* cursor: pointer; */
+      }
+      button {
+        padding: 12px 20px; border: none; border-radius: 10px;
+        background: linear-gradient(to right, #2596be, #2596be);
+        color: white; font-weight: bold; font-size: 16px;
+        cursor: pointer; width: 100%; margin-top: 10px;
+        transition: 0.3s;
+      }
+      button:hover { transform: scale(1.03); }
+      .erp-logo { width: 100px; margin-bottom: 20px; }
+      .error-msg { color: #ff8080; margin-top: 15px; }
+    </style>
+  </head>
+  <body>
+    <div id="particles-js"></div>
+    <div class="login-container">
+      <div class="login-box">
+        <img src="https://erp14.srp.ai/files/Srptechs.png" class="erp-logo">
+        <h2>Welcome to SRP360</h2>
+        <div id="error" class="error-msg"></div>
+        <form id="loginForm">
+          <input type="text" name="usr" id="usr" placeholder="Username" required>
+          <div class="password-field">
+            <input type="password" name="pwd" id="pwd" placeholder="Password" required>
+            <button type="button" class="toggle-password" onclick="togglePassword()">👁</button>
+          </div>
+          <button type="submit">Login</button>
+        </form>
+        <p style="color: #ccc; margin-top: 20px;">Powered by SRP360</p>
+      </div>
+    </div>
+
+    <script>
+      // Show/hide password work function using eye sticker
+      function togglePassword() {
+        const pwd = document.getElementById("pwd");
+        pwd.type = pwd.type === "password" ? "text" : "password";
+      }
+
+      // Login API Worki
+      document.getElementById("loginForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+        const username = document.getElementById("usr").value;
+        const password = document.getElementById("pwd").value;
+
+        $.ajax({
+          type: "POST",
+          url: "/api/method/login",
+          data: {
+            usr: username,
+            pwd: password
+          },
+          success: function() {
+            window.location.href = "/app"; // from here if we want to redirect to the other page we can use this
+          },
+          error: function(xhr) {
+            let msg = "Login failed. Please try again.";
+            if (xhr.responseJSON && xhr.responseJSON.message) {
+              msg = xhr.responseJSON.message;
+            }
+            document.getElementById("error").innerText = msg;
+          }
+        });
+      });
+
+      // Particles.js css
+      particlesJS("particles-js", {
+        "particles": {
+          "number": { "value": 100 },
+          "color": { "value": "#ffffff" },
+          "shape": { "type": "circle" },
+          "opacity": { "value": 0.5 },
+          "size": { "value": 3 },
+          "line_linked": {
+            "enable": true,
+            "distance": 150,
+            "color": "#ffffff",
+            "opacity": 0.4,
+            "width": 1
+          },
+          "move": {
+            "enable": true,
+            "speed": 2
+          }
+        },
+        "interactivity": {
+          "events": {
+            "onhover": { "enable": true, "mode": "grab" }
+          }
+        },
+        "retina_detect": true
+      });
+    </script>
+  </body>
+  </html>

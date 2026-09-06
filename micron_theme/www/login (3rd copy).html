@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SRP360 Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script src="/assets/frappe/js/lib/jquery/jquery.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(to right, #2c5364, #203a43, #0f2027);
+    }
+
+    .split-container {
+      display: flex;
+      flex-direction: row;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    .left-section {
+      flex: 1.5;
+      position: relative;
+    }
+
+    .right-section {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: rgb(240, 238, 238);
+      z-index: 2;
+      border-top-left-radius: 30px;
+      border-bottom-left-radius: 30px;
+      overflow: hidden;
+    }
+
+    #particles-js {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .divider {
+      position: absolute;
+      right: 0;
+      top: 7.5%;
+      height: 85%;
+      width: 30px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 30px;
+      z-index: 2;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .divider::before {
+      content: '';
+      position: absolute;
+      left: -18px;
+      top: 0;
+      width: 18px;
+      height: 100%;
+      background: linear-gradient(to right, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.15) 60%, rgba(255,255,255,0) 100%);
+      border-top-left-radius: 30px;
+      border-bottom-left-radius: 30px;
+      z-index: 3;
+      pointer-events: none;
+      filter: blur(0.5px);
+    }
+
+    .login-form-wrapper {
+      width: 100%;
+      max-width: 400px;
+      padding: 40px;
+      text-align: center;
+      z-index: 4;
+    }
+
+    .erp-logo {
+      width: 100px;
+      margin-bottom: 20px;
+    }
+
+    h4.txt {
+      margin-bottom: 30px;
+      font-weight: bold;
+      color: #2c5364;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    .password-field {
+      position: relative;
+    }
+
+    .toggle-password {
+      position: absolute;
+      left: 120px;
+      top: 0%;
+      transform: translateY(-1%);
+      background: none;
+      border: none;
+      color: #777;
+      cursor: pointer;
+    }
+
+    button {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(to right, #2c5364, #203a43);
+      color: white;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 10px;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      transform: scale(1.03);
+    }
+
+    .error-msg {
+      color: #ff4d4d;
+      margin-top: 15px;
+    }
+
+    .powered-by {
+      color: #2c5364;
+      margin-top: 20px;
+    }
+
+    /* ------------------ Responsive Section ------------------ */
+    @media (max-width: 768px) {
+      .split-container {
+        flex-direction: column;
+      }
+
+      .left-section {
+        flex: 0.8;
+        height: 40vh;
+      }
+
+      .right-section {
+        flex: 1;
+        border-radius: 0;
+        height: 60vh;
+        border-top-left-radius: 30px;
+        border-top-right-radius: 30px;
+      }
+
+      .divider {
+        display: none;
+      }
+
+      .toggle-password {
+        left: auto;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .login-form-wrapper {
+        padding: 20px;
+      }
+
+      input, button {
+        font-size: 14px;
+      }
+
+      .erp-logo {
+        width: 80px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="split-container">
+    <div class="left-section">
+      <div id="particles-js"></div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="right-section">
+      <div class="login-form-wrapper">
+        <img src="https://erp14.srp.ai/files/Srptechs.png" class="erp-logo">
+        <h4 class="txt">Login to SRP360</h4>
+        <div id="error" class="error-msg"></div>
+        <form id="loginForm">
+          <input type="text" name="usr" id="usr" placeholder="Username" required>
+          <div class="password-field">
+            <input type="password" name="pwd" id="pwd" placeholder="Password" required>
+            <button type="button" class="toggle-password" onclick="togglePassword()">👁</button>
+          </div>
+          <button type="submit">Login</button>
+        </form>
+        <p class="powered-by">Powered by SRP360</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function togglePassword() {
+      const pwd = document.getElementById("pwd");
+      pwd.type = pwd.type === "password" ? "text" : "password";
+    }
+
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const username = document.getElementById("usr").value;
+      const password = document.getElementById("pwd").value;
+
+      $.ajax({
+        type: "POST",
+        url: "/api/method/login",
+        data: {
+          usr: username,
+          pwd: password
+        },
+        success: function() {
+          window.location.href = "/app";
+        },
+        error: function(xhr) {
+          let msg = "Login failed. Please try again.";
+          if (xhr.responseJSON && xhr.responseJSON.message) {
+            msg = xhr.responseJSON.message;
+          }
+          document.getElementById("error").innerText = msg;
+        }
+      });
+    });
+
+    // Particles.js Configuration
+    particlesJS("particles-js", {
+      "particles": {
+        "number": { "value": 100 },
+        "color": { "value": "#ffffff" },
+        "shape": { "type": "circle" },
+        "opacity": { "value": 0.5 },
+        "size": { "value": 3 },
+        "line_linked": {
+          "enable": true,
+          "distance": 150,
+          "color": "#ffffff",
+          "opacity": 0.4,
+          "width": 1
+        },
+        "move": {
+          "enable": true,
+          "speed": 2
+        }
+      },
+      "interactivity": {
+        "events": {
+          "onhover": { "enable": true, "mode": "grab" }
+        }
+      },
+      "retina_detect": true
+    });
+  </script>
+
+</body>
+</html>

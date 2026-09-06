@@ -1,164 +1,284 @@
+/* ══════════════════════════════════════════════════════════════
+   Spark360 desk theme
+   Every colour comes from the tokens below - change them here,
+   not in the rules further down.
+   ══════════════════════════════════════════════════════════════ */
+
 :root {
-	--bg-color:  #e5e8eb;
-	--btn-primary: #499ea1;
-	--btn-secondary: #499ea1;
-	--secondary: #499ea1;
-	--navbar-bg: linear-gradient(to right, #63b783, #499ea1);
-	--text-btn-color: white;
-	--table-border-color: #499ea140;
-	--btn-default-hover-bg: white;
-	--sidebar-select-color: #017E8420;
-	--checkbox-gradient: linear-gradient(180deg, var(--btn-primary) -124.51%, var(--btn-primary) 100%);
+	/* brand */
+	--spark-blue: #3b6fe0;
+	--spark-blue-dark: #3363d6;
+	--spark-blue-light: #6fa8f5;
+
+	/* translucent blue washes - used for fills, hovers and selections */
+	--spark-tint-04: rgba(59, 111, 224, 0.04);
+	--spark-tint-08: rgba(59, 111, 224, 0.08);
+	--spark-tint-12: rgba(59, 111, 224, 0.12);
+	--spark-tint-20: rgba(59, 111, 224, 0.20);
+	--spark-tint-35: rgba(59, 111, 224, 0.35);
+
+	/* ink */
+	--ink: #16213e;
+	--ink-soft: #6b7a99;
+	--ink-faint: #9aa7c2;
+
+	/* surfaces */
+	--surface: #ffffff;
+	--line: #e4eaf7;
+
+	/* frappe overrides */
+	--bg-color: #f1f5fc;
+	--btn-primary: var(--spark-blue);
+	--btn-secondary: var(--spark-blue);
+	--secondary: var(--spark-blue);
+	--navbar-bg: linear-gradient(to right, #eaf1fc, #f6f8fd);
+	--text-btn-color: #ffffff;
+	--table-border-color: var(--spark-tint-20);
+	--btn-default-hover-bg: #ffffff;
+	--sidebar-select-color: var(--spark-tint-12);
+	--checkbox-gradient: linear-gradient(180deg, var(--spark-blue) -124.51%, var(--spark-blue) 100%);
 	--text-base: 14px;
 }
 
-
-/* collapse work */
+/* ── Collapsible sidebar ───────────────────────────────────── */
 
 .app-sidebar {
-    overflow: hidden !important;
-    transition: width 0.3s ease-in-out;
-    z-index: 100;
-    white-space: nowrap;
-    background-color: #fff;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+	overflow: hidden !important;
+	transition: width 0.3s ease-in-out;
+	z-index: 100;
+	white-space: nowrap;
+	background-color: var(--surface);
+	box-shadow: 2px 0 5px rgba(22, 33, 62, 0.06);
 }
 
 .custom-collapsible-sidebar {
-    background-color: white;
-    border-right: 1px solid #ccc;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-    z-index: 100;
+	background-color: var(--surface);
+	border-right: 1px solid var(--line);
+	box-shadow: 2px 0 5px rgba(22, 33, 62, 0.06);
+	z-index: 100;
 }
 
 .custom-collapsible-sidebar .standard-sidebar-section {
-    white-space: nowrap;
-    overflow: hidden;
+	white-space: nowrap;
+	overflow: hidden;
 }
 
+/* ── Module / list sidebar ─────────────────────────────────── */
 
-/* login page */
+.icon.icon-md {
+	width: 17px;
+	height: 17px;
+}
+
+.sidebar-item-label {
+	font-size: 14px;
+}
+
+/* Was a solid dark teal panel with white text; now a light card so the
+   "Filter By", "Edit Filters" and "Save Filter" labels stay readable. */
+.list-sidebar.overlay-sidebar {
+	background-color: var(--surface) !important;
+	border: 1px solid var(--line);
+	border-radius: 16px;
+	color: var(--ink);
+	padding: 10px;
+	box-shadow: 0 4px 14px rgba(22, 33, 62, 0.07);
+	transition: all 0.3s ease-in-out;
+	margin-left: 0 !important;
+}
+
+.list-sidebar.overlay-sidebar .sidebar-label,
+.list-sidebar.overlay-sidebar .sidebar-section-title,
+.list-sidebar.overlay-sidebar h6 {
+	color: var(--ink-soft) !important;
+}
+
+.list-sidebar.overlay-sidebar a,
+.list-sidebar.overlay-sidebar .list-link a,
+.list-sidebar.overlay-sidebar .sidebar-action a {
+	color: var(--spark-blue) !important;
+}
+
+.list-sidebar.overlay-sidebar a:hover {
+	color: var(--spark-blue-dark) !important;
+}
+
+.list-sidebar.overlay-sidebar .list-link > a:hover,
+.list-sidebar.overlay-sidebar .sidebar-item:hover {
+	background-color: var(--spark-tint-08);
+	border-radius: 8px;
+}
+
+.col-lg-2.layout-side-section {
+	padding-left: 0 !important;
+	margin-left: 0 !important;
+}
+
+/* ── Login page ────────────────────────────────────────────── */
 
 [data-path="login"] .navbar-light {
-	border-bottom: 1px solid var(--blue-400) !important;
-	background: white;
+	border-bottom: 1px solid var(--line) !important;
+	background: var(--surface);
 }
 
 [data-path="login"] .web-footer {
-	border-top: 1px solid var(--blue-400) !important;
+	border-top: 1px solid var(--line) !important;
 }
 
 .for-login .page-card {
-	border: 1px solid var(--blue-400) !important;
+	border: 1px solid var(--line) !important;
 }
 
-.for-login .btn-login{
-	background-color: var(--blue-800) !important;
+.for-login .btn-login {
+	background-color: var(--spark-blue) !important;
 	border: none !important;
-	color: white;
+	color: #fff;
 }
 
-.for-login .btn-login:hover{
-	background-color: var(--blue-600) !important;
+.for-login .btn-login:hover {
+	background-color: var(--spark-blue-dark) !important;
 	border: none !important;
-	color: white;
+	color: #fff;
 }
 
 .for-login .page-card-head h4 {
-	color: black !important;
+	color: var(--ink) !important;
 }
 
-.for-login .form-control, .for-login .form-control{
-	background-color: white !important;
-	border: solid 1px var(--blue-400) !important;
+.for-login .form-control {
+	background-color: #fff !important;
+	border: solid 1px var(--line) !important;
 }
 
-.for-login .form-control:focus, .for-login .form-control:hover{
-	box-shadow: 0 0 0 1px var(--blue-300) !important;
+.for-login .form-control:focus,
+.for-login .form-control:hover {
+	box-shadow: 0 0 0 3px var(--spark-tint-12) !important;
+	border-color: var(--spark-tint-35) !important;
 }
 
-.for-login .page-card .page-card-body .forgot-password-message>* {
-	color: var(--blue-600) !important;
+.for-login .page-card .page-card-body .forgot-password-message > * {
+	color: var(--spark-blue) !important;
 }
 
-/* NAVBAR DESIGNE */
-
-/* NAVBAR DESIGN - Reduce Height */
+/* ── Navbar ────────────────────────────────────────────────── */
 
 .navbar {
-    padding-top: 0.2rem;   /* Reduce top padding */
-    padding-bottom: 0.2rem; /* Reduce bottom padding */
-        /* Set a lower min height */
-}
-.navbar .navbar-expand .sticky-top{
-	padding-top: 0.2rem;   /* Reduce top padding */
-    padding-bottom: 0.2rem;
+	padding-top: 0.2rem;
+	padding-bottom: 0.2rem;
+	background: var(--navbar-bg);
+	border-bottom: 1px solid var(--line);
 }
 
+.navbar .navbar-expand .sticky-top {
+	padding-top: 0.2rem;
+	padding-bottom: 0.2rem;
+}
+
+/* The navbar is light, so its text has to be dark. The old rule painted
+   everything white, which is why the breadcrumbs after the logo were
+   invisible. Height/line-height are left alone so items stay centred. */
 .navbar .navbar-expand span,
 .navbar .navbar-expand li a,
-#navbar-breadcrumbs a,
 .navbar .nav-item button.nav-link {
-    color: #000000;
-    padding-top: 0.25rem;    /* Reduce padding inside items */
-    padding-bottom: 0.25rem;
-    line-height: 0.5;        /* Tighter line spacing */
-    height: 80px;             /* Your existing width */
+	color: var(--ink) !important;
+	padding-top: 0.25rem;
+	padding-bottom: 0.25rem;
 }
 
-
-#navbar-breadcrumbs li.disabled a {
-  color: var(--white-overlay-400) !important;
+#navbar-breadcrumbs a {
+	color: var(--ink-soft) !important;
+	font-weight: 500;
 }
 
-.nav-tabs{ 
-	border:none;
+#navbar-breadcrumbs a:hover {
+	color: var(--spark-blue) !important;
+}
+
+/* current page in the trail */
+#navbar-breadcrumbs li.disabled a,
+#navbar-breadcrumbs li:last-child a {
+	color: var(--ink) !important;
+}
+
+#navbar-breadcrumbs li + li::before {
+	color: var(--ink-faint) !important;
+}
+
+/* navbar icons (notifications, help, avatar) */
+.navbar .es-icon,
+.navbar .icon,
+.dropdown-notifications .es-icon {
+	fill: var(--ink-soft) !important;
+	stroke: var(--ink-soft) !important;
+}
+
+.navbar .nav-item button.nav-link:hover .es-icon,
+.navbar .nav-item button.nav-link:hover .icon {
+	fill: var(--spark-blue) !important;
+	stroke: var(--spark-blue) !important;
+}
+
+.nav-tabs {
+	border: none;
 }
 
 .search-bar span {
-	color: var(--neutral-black) !important;
+	color: var(--ink-soft) !important;
 }
 
-/* PAGE DESIGN */
+.search-bar .form-control {
+	background-color: #fff !important;
+	border: 1px solid var(--line) !important;
+}
 
-body, .page-container { 
+/* ── Page ──────────────────────────────────────────────────── */
+
+body,
+.page-container {
 	background-color: var(--bg-color) !important;
 }
 
-.page-head { 
-	background-color: white !important;
+.page-head {
+	background-color: var(--surface) !important;
 }
 
 .es-icon {
-	@extend .icon;
-	fill :  #017E8480 !important; 
-	stroke:  #017E8480 !important;
+	fill: var(--spark-tint-35) !important;
+	stroke: var(--spark-tint-35) !important;
 }
 
-.page-content .layout-main-section{
-        background-color: white;
+.page-content .layout-main-section {
+	background-color: var(--surface);
 }
 
 .datatable .dt-cell {
-  background-color: #fff !important;
+	background-color: #fff !important;
 }
 
-/* DASHBOARD DESIGN */
-.desk-sidebar-item{
+/* ── Dashboard / workspace widgets ─────────────────────────── */
+
+.desk-sidebar-item {
 	line-height: 2.2;
 }
 
-.widget.links-widget-box, .widget.dashboard-widget-box {
-	border: 1px solid #499ea180;
+.widget.links-widget-box,
+.widget.dashboard-widget-box {
+	border: 1px solid var(--line);
+	border-radius: 12px;
 }
 
-.widget.links-widget-box .widget-head .widget-label .widget-title{
-	background-color: white;
-	color: #499ea1 !important;
+.widget.links-widget-box .widget-head .widget-label .widget-title {
+	background-color: transparent;
+	color: var(--spark-blue) !important;
 }
 
-.widget-body .link-item{
+.widget-body .link-item {
 	margin-bottom: 5px !important;
+}
+
+.widget-body .link-item:hover {
+	background-color: var(--spark-tint-08);
+	color: var(--spark-blue);
 }
 
 .icon-md {
@@ -167,220 +287,242 @@ body, .page-container {
 }
 
 .onboard-spotlight {
-	color: var(--secondary) !important;
+	color: var(--spark-blue) !important;
 }
 
 a.onboard-spotlight .link-content:hover {
-	color: var(--btn-secondary) !important;
+	color: var(--spark-blue-dark) !important;
 }
 
-.dropdown-notifications .es-icon{
-	@extend .icon;
-	fill :  white !important; 
-	stroke:  white !important;
+/* ── List view ─────────────────────────────────────────────── */
+
+.list-filters .form-control,
+.standard-filter-section .form-control {
+	box-shadow: 0 0 0 1px var(--line) !important;
+	background-color: #fff;
 }
 
-/* LIST GRID DESIGN */
-
-.list-filters .form-control, .standard-filter-section .form-control, .standard-filter-section .form-control {
-	box-shadow: 0 0 0 1px rgba(124, 124, 124, 0.25) !important;
+.list-filters .form-control:focus,
+.list-filters .form-control:hover,
+.standard-filter-section .form-control:focus,
+.standard-filter-section .form-control:hover {
+	box-shadow: 0 0 0 2px var(--spark-tint-20) !important;
 }
 
-.level.list-row-head, .level.list-row-head .level-item {
-	font-weight:bold;
-	background-color: var(--gray-300);
-}
-.list-row-container .list-row:hover{
-	background-color: var(--sidebar-select-color);
-}
-
-.list-filters .form-control:focus, .list-filters .form-control:hover,
-.standard-filter-section .form-control:focus, .standard-filter-section .form-control:hover {
-	box-shadow: 0 0 0 2px rgba(124, 124, 124, 0.25) !important;
+.level.list-row-head,
+.level.list-row-head .level-item {
+	font-weight: 600;
+	background-color: #eef3fc;
+	color: var(--ink-soft);
 }
 
-/*  FORM DESIGN  */
-.form-control, .frappe-control .ql-editor:not(.read-mode){
-	box-shadow: 0 0 0 1px rgba(124, 124, 124, 0.25) !important;
+.list-row-container .list-row:hover {
+	background-color: var(--spark-tint-04);
+}
+
+/* ── Forms ─────────────────────────────────────────────────── */
+
+.form-control,
+.frappe-control .ql-editor:not(.read-mode) {
+	box-shadow: 0 0 0 1px var(--line) !important;
 }
 
 .ace_editor {
-	box-shadow: 0 0 0 1px rgba(124, 124, 124, 0.25) !important;
+	box-shadow: 0 0 0 1px var(--line) !important;
 }
 
-.ql-editor:focus, .ace_editor:focus{
-	box-shadow: 0 0 0 2px rgba(124, 124, 124, 0.25) !important;
+.ql-editor:focus,
+.ace_editor:focus {
+	box-shadow: 0 0 0 2px var(--spark-tint-20) !important;
 }
 
-.form-control:focus, .form-control:hover{
-	box-shadow: 0 0 0 2px #499ea1 !important;
+.form-control:hover {
+	box-shadow: 0 0 0 1px var(--spark-tint-35) !important;
 }
 
 .form-control:focus {
-	background-color: #499ea125;
+	box-shadow: 0 0 0 3px var(--spark-tint-20) !important;
+	background-color: var(--spark-tint-04);
 }
 
 .frappe-control:not([data-fieldtype="MultiSelectPills"]):not([data-fieldtype="Table MultiSelect"]).has-error input:hover,
-.frappe-control:not([data-fieldtype="MultiSelectPills"]):not([data-fieldtype="Table MultiSelect"]).has-error input:focus
-{
-	box-shadow: 0 0 0 2px #eb909180 !important;
+.frappe-control:not([data-fieldtype="MultiSelectPills"]):not([data-fieldtype="Table MultiSelect"]).has-error input:focus {
+	box-shadow: 0 0 0 2px var(--spark-tint-35) !important;
 }
 
-.frappe-control:not([data-fieldtype="MultiSelectPills"]):not([data-fieldtype="Table MultiSelect"]).has-error input{
+.frappe-control:not([data-fieldtype="MultiSelectPills"]):not([data-fieldtype="Table MultiSelect"]).has-error input {
 	box-shadow: none !important;
 }
 
 option {
-	 background-color: white !important;
+	background-color: #fff !important;
 }
 
-.grid-heading-row .filter-row, .awesomplete [role="listbox"] {
-	background-color: white !important;
+.grid-heading-row .filter-row,
+.awesomplete [role="listbox"] {
+	background-color: #fff !important;
 }
 
-.grid-row-open{
-	box-shadow: 0 0 0 3px #499ea1 !important;
+.grid-row-open {
+	box-shadow: 0 0 0 2px var(--spark-tint-35) !important;
 }
 
-.awesomplete [role="option"]:hover,  .awesomplete li:hover{
-	background-color: var(--gray-300) !important;
+.awesomplete [role="option"]:hover,
+.awesomplete li:hover {
+	background-color: var(--spark-tint-08) !important;
+	color: var(--ink);
 }
 
 input[type="checkbox"]:checked {
-	background-color: var(--btn-secondary) !important;
-	background-image: url("data:image/svg+xml, <svg viewBox='0 0 8 7' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M1 4.00001L2.66667 5.80001L7 1.20001' stroke='white' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>"),var(--checkbox-gradient) !important;
+	background-color: var(--spark-blue) !important;
+	background-image: url("data:image/svg+xml, <svg viewBox='0 0 8 7' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M1 4.00001L2.66667 5.80001L7 1.20001' stroke='white' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>"), var(--checkbox-gradient) !important;
 }
 
 .datepicker {
-	 background-color: var(--bg-color) !important;
+	background-color: #fff !important;
+	border: 1px solid var(--line) !important;
 }
 
-/* BUTTONS DESIGN */ 
-.btn{
-	border-radius: 0.25rem !important;
+.datepicker--cell.-current- {
+	color: var(--spark-blue) !important;
 }
 
-.btn.btn-primary{
-	color: #ffffff;
-	background: #499ea1;
-	border: solid 2px #499ea1 !important;
+.datepicker--cell.-selected- {
+	background: var(--spark-blue) !important;
 }
 
-.btn.btn-primary:hover {
-	background: var(--btn-default-hover-bg) !important;
-	border: solid 2px #499ea1 !important;
-	color: var(--text-color);
-  }
+/* ── Buttons ───────────────────────────────────────────────── */
+/* Primary keeps a solid fill so the main action still reads first.
+   Everything else is a translucent blue wash on white. */
 
-.standard-actions .btn.btn-secondary{
-	background: var(--secondary) !important;
-        border: solid 2px var(--secondary) !important;
-	color: var(--text-btn-color);
+.btn {
+	border-radius: 8px !important;
+	font-weight: 500;
 }
 
-.standard-actions .btn.btn-secondary:hover{
-	background: var(--btn-default-hover-bg) !important;
-    	border: solid 2px var(--secondary) !important;
-	color: var(--text-color);
+.btn.btn-primary,
+.btn.btn-new-doc {
+	color: #fff !important;
+	background: var(--spark-blue) !important;
+	border: solid 1px var(--spark-blue) !important;
+	box-shadow: 0 4px 12px -6px var(--spark-tint-35);
 }
 
-.custom-actions .btn.btn-default{
-	background: var(--secondary) !important;
-        border: solid 2px var(--secondary) !important;
-	color: var(--text-btn-color);
+.btn.btn-primary:hover,
+.btn.btn-new-doc:hover {
+	background: var(--spark-blue-dark) !important;
+	border-color: var(--spark-blue-dark) !important;
+	color: #fff !important;
 }
 
-.custom-actions .btn.btn-default:hover{
-	background: var(--btn-default-hover-bg) !important;
-    	border: solid 2px var(--secondary) !important;
-	color: var(--text-color);
+.standard-actions .btn.btn-secondary,
+.custom-actions .btn.btn-default {
+	background: var(--spark-tint-08) !important;
+	border: solid 1px var(--spark-tint-20) !important;
+	color: var(--spark-blue) !important;
+	box-shadow: none;
 }
 
-.btn.btn-secondary .es-icon{
-	@extend .icon;
-	fill :  white !important; 
-	stroke:  white !important;
+.standard-actions .btn.btn-secondary:hover,
+.custom-actions .btn.btn-default:hover {
+	background: var(--spark-tint-12) !important;
+	border-color: var(--spark-tint-35) !important;
+	color: var(--spark-blue-dark) !important;
 }
 
-.btn.btn-default {
-	background: var(--btn-default-hover-bg) !important;
-    border: solid 1px var(--btn-secondary) !important;
-    color: var(--text-color);
+.btn.btn-default,
+.btn.grid-add-row {
+	background: #fff !important;
+	border: solid 1px var(--line) !important;
+	color: var(--ink-soft) !important;
 }
 
-.btn.grid-add-row{
-	background: var(--btn-default-hover-bg) !important;
-    border: solid 1px var(--btn-secondary) !important;
-    color: var(--text-color);
+.btn.btn-default:hover,
+.btn.grid-add-row:hover {
+	background: var(--spark-tint-04) !important;
+	border-color: var(--spark-tint-35) !important;
+	color: var(--spark-blue) !important;
 }
 
-.btn.btn-new-doc{
-	background-color: #499ea1 !important;
-	color: var(--text-btn-color);
-	border: solid 2px #499ea1 !important;
+.btn.btn-secondary .es-icon {
+	fill: var(--spark-blue) !important;
+	stroke: var(--spark-blue) !important;
 }
 
-.btn.btn-new-doc:hover{
-	background: var(--btn-default-hover-bg) !important;
-	border: solid 2px #499ea1 !important;
-	color: var(--text-color);
+.btn.btn-primary .es-icon,
+.btn.btn-new-doc .es-icon {
+	fill: #fff !important;
+	stroke: #fff !important;
 }
 
-.custom-actions .btn{
+.custom-actions .btn {
 	font-size: 12px !important;
 }
 
-.btn-group > .btn:not(:last-child):not(.dropdown-toggle), div#driver-popover-item .driver-popover-footer .btn-group > button:not(:last-child):not(.dropdown-toggle), .btn-group > .btn-group:not(:last-child) > .btn, div#driver-popover-item .driver-popover-footer .btn-group > .btn-group:not(:last-child) > button {
+.btn-group > .btn:not(:last-child):not(.dropdown-toggle),
+div#driver-popover-item .driver-popover-footer .btn-group > button:not(:last-child):not(.dropdown-toggle),
+.btn-group > .btn-group:not(:last-child) > .btn,
+div#driver-popover-item .driver-popover-footer .btn-group > .btn-group:not(:last-child) > button {
 	border-top-right-radius: 0 !important;
-	border-bottom-right-radius: 0 !important;  
+	border-bottom-right-radius: 0 !important;
 }
 
-.btn-group > .btn:not(:first-child), div#driver-popover-item .driver-popover-footer .btn-group > button:not(:first-child), .btn-group > .btn-group:not(:first-child) > .btn, div#driver-popover-item .driver-popover-footer .btn-group > .btn-group:not(:first-child) > button {
+.btn-group > .btn:not(:first-child),
+div#driver-popover-item .driver-popover-footer .btn-group > button:not(:first-child),
+.btn-group > .btn-group:not(:first-child) > .btn,
+div#driver-popover-item .driver-popover-footer .btn-group > .btn-group:not(:first-child) > button {
 	border-top-left-radius: 0 !important;
 	border-bottom-left-radius: 0 !important;
 }
 
-/* POS DESIGN */
+/* ── POS ───────────────────────────────────────────────────── */
 
-.point-of-sale-app section { 
+.point-of-sale-app section {
 	min-height: 40rem !important;
 }
 
 .client-wrapper ul {
 	padding-left: 22px;
-	margin-top: 0; 
-	margin-bottom:0;
+	margin-top: 0;
+	margin-bottom: 0;
 }
 
 .client-wrapper li {
-  float: left;
-  list-style-type: none;
+	float: left;
+	list-style-type: none;
 }
 
-.client-wrapper li a { 
+.client-wrapper li a {
 	display: inline-block;
 	text-decoration: none;
-	width: 100%; 
-	background-color: var(--gray-300) !important; 
-	color: black; 
+	width: 100%;
+	background-color: var(--spark-tint-08) !important;
+	color: var(--ink-soft);
 	text-align: center;
 }
 
-.client-wrapper li a.plus-pos, .client-wrapper li a.plus-pos:focus, .client-wrapper li a.plus-pos:hover{
-        background-color: var(--gray-400) !important;
+.client-wrapper li a.plus-pos,
+.client-wrapper li a.plus-pos:focus,
+.client-wrapper li a.plus-pos:hover {
+	background-color: var(--spark-tint-20) !important;
+	color: var(--spark-blue);
 }
 
-.client-wrapper li a.minus-pos, .client-wrapper li a.minus-pos:focus, .client-wrapper li a.minus-pos:hover{
-	background-color: var(--red-400) !important;
+.client-wrapper li a.minus-pos,
+.client-wrapper li a.minus-pos:focus,
+.client-wrapper li a.minus-pos:hover {
+	background-color: rgba(224, 82, 82, 0.14) !important;
+	color: #c33d3d;
 }
 
 .client-wrapper li a:focus,
 .client-wrapper li a:hover {
-  background-color: var(--gray-400) !important;
-  color: black;
+	background-color: var(--spark-tint-12) !important;
+	color: var(--ink);
 }
 
 .client-wrapper li a.active {
-  background-color:  white !important;
-  color: black;
+	background-color: #fff !important;
+	color: var(--ink);
+	box-shadow: inset 0 0 0 1px var(--spark-tint-20);
 }

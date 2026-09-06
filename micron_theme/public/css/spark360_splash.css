@@ -1,0 +1,182 @@
+/* ══════════════════════════════════════════════════════════════
+   Spark360 — splash screen + search icon
+   Load via:
+     app_include_css = ["/assets/<your_app>/css/spark360_splash.css"]
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Search icon placement ─────────────────────────────────── */
+
+.navbar .search-bar .spark-search-icon-wrap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.navbar .search-bar .spark-search-icon {
+    width: 16px;
+    height: 16px;
+    display: block;
+}
+
+.navbar .spark-search-icon circle,
+.navbar .spark-search-icon path {
+    stroke: inherit;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   SPLASH SCREEN
+   ══════════════════════════════════════════════════════════════ */
+
+/* Force splash backdrop to cover the screen */
+html body .splash,
+html body div.splash {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    z-index: 999998 !important;
+    overflow: hidden !important;
+    background:
+        radial-gradient(900px 460px at 82% -8%, rgba(111, 168, 245, 0.22), transparent 60%),
+        radial-gradient(760px 420px at -8% 12%, rgba(108, 93, 211, 0.12), transparent 55%),
+        linear-gradient(160deg, #eaf1fc, #f6f8fd 60%) !important;
+}
+
+/* Hide stock Frappe logos inside splash */
+html body .splash img,
+html body .splash > svg,
+html body .splash .frappe-icon {
+    display: none !important;
+}
+
+/* Disable old pseudo-elements on splash to prevent top-left rendering */
+html body .splash::before,
+html body .splash::after {
+    display: none !important;
+    content: none !important;
+}
+
+/* ── The spark (Attached directly to BODY to guarantee screen center) ── */
+
+html body:has(.splash)::before {
+    content: "" !important;
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    width: 82px !important;
+    height: 82px !important;
+    z-index: 999999 !important;
+    pointer-events: none !important;
+    background: linear-gradient(135deg, #6fa8f5 0%, #3b6fe0 55%, #6c5dd3 100%) !important;
+    clip-path: polygon(
+        50% 0%, 60% 40%,
+        100% 50%, 60% 60%,
+        50% 100%, 40% 60%,
+        0% 50%, 40% 40%
+    ) !important;
+    filter: drop-shadow(0 10px 26px rgba(59, 111, 224, 0.42)) !important;
+    transform: translate(-50%, -50%) rotate(0deg) scale(0.8) !important;
+    animation: spark-breathe 1.9s cubic-bezier(.45, 0, .2, 1) infinite !important;
+}
+
+/* ── The pulse ring ────────────────────────────────────────── */
+
+html body:has(.splash)::after {
+    content: "" !important;
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    width: 150px !important;
+    height: 150px !important;
+    z-index: 999999 !important;
+    pointer-events: none !important;
+    border: 1.5px solid rgba(59, 111, 224, 0.40) !important;
+    border-radius: 50% !important;
+    transform: translate(-50%, -50%) scale(0.45) !important;
+    animation: spark-ring 1.9s cubic-bezier(.2, .6, .3, 1) infinite !important;
+}
+
+/* ── Keyframes (Translate MUST stay in every frame) ───────── */
+
+@keyframes spark-breathe {
+    0%   { transform: translate(-50%, -50%) rotate(0deg)   scale(0.80); opacity: 0.75; }
+    45%  { transform: translate(-50%, -50%) rotate(90deg)  scale(1.06); opacity: 1; }
+    100% { transform: translate(-50%, -50%) rotate(180deg) scale(0.80); opacity: 0.75; }
+}
+
+@keyframes spark-ring {
+    0%   { transform: translate(-50%, -50%) scale(0.45); opacity: 0; }
+    35%  { opacity: 0.85; }
+    100% { transform: translate(-50%, -50%) scale(1.25); opacity: 0; }
+}
+
+/* Motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+    html body:has(.splash)::before {
+        animation: spark-fade 2s ease-in-out infinite !important;
+        transform: translate(-50%, -50%) scale(1) !important;
+    }
+    html body:has(.splash)::after { display: none !important; }
+
+    @keyframes spark-fade {
+        0%, 100% { opacity: 0.55; }
+        50%      { opacity: 1; }
+    }
+}
+
+/* Instantly hide default ERPNext SVG / Image inside navbar brand */
+.navbar-brand img:not([data-custom-logo="1"]),
+.navbar-brand svg,
+.navbar-brand .app-logo,
+.navbar-brand .frappe-icon {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+/* Ensure navbar brand has a reserved space during load to prevent layout shifting */
+.navbar-brand {
+    min-width: 70px;
+    min-height: 28px;
+    display: inline-flex !important;
+    align-items: center !important;
+}
+/* ══════════════════════════════════════════════════════════════
+   OPTION B — looping video instead of the CSS spark
+   ══════════════════════════════════════════════════════════════
+   Uncomment below and add this to the TOP of your theme JS:
+
+     (function () {
+       const s = document.querySelector(".splash");
+       if (s && !s.querySelector("video")) {
+         s.insertAdjacentHTML("afterbegin",
+           '<video class="splash-video" autoplay muted loop playsinline ' +
+           'src="/assets/<your_app>/videos/spark.mp4"></video>');
+       }
+     })();
+
+   Trade-offs: the splash is usually gone in under a second on a warm
+   cache, and a video often has not decoded its first frame by then, so
+   users see a blank box. Autoplay needs muted + playsinline and some
+   browser policies block it anyway. A short loop is still hundreds of KB
+   to several MB on every cold load, ahead of the desk bundle. It makes
+   more sense on the login screen, where people actually sit for a while.
+
+html body .splash::before,
+html body .splash::after { display: none !important; }
+
+html body .splash .splash-video {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 220px;
+	height: 220px;
+	object-fit: cover;
+	border-radius: 24px;
+	box-shadow: 0 18px 44px -18px rgba(22, 33, 62, 0.45);
+}
+*/

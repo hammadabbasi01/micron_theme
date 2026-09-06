@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Form Design</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="style.css">
+    <style>
+    img.mainlogo {
+    width: 75%;
+}
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+      }
+      body {
+        background: #fbf3ff;
+        /* background-image: url("https://azupgrade.dgtx.me/assets/vpstwo/images/login-bg.jpg"); */
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 100vh;
+         overflow: hidden;
+      } 
+      .container {
+        position: absolute;
+        max-width: 800px;
+        height: 500px;
+        margin: auto;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      } 
+      .myRightCtn {
+        position: relative;
+        background-image: linear-gradient(45deg, #438047, #467C4A) !important;
+        border-radius: 25px;
+        height: 100%;
+        padding: 25px;
+        color: rgb(192, 192, 192);
+        font-size: 14px; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .myLeftCtn {
+        position: relative;
+        background: #fff;
+        border-radius: 25px;
+        height: 100%;
+        padding: 10px;
+        padding-left: 50px;
+      }
+      .myLeftCtn header {
+        text-align: center;
+        color: #1f2940;
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 20px;
+      }
+      .row{
+      height: 100%;
+      } 
+      .myCard {
+        position: relative;
+        background: #fff;
+        height: 100%;
+        border-radius: 25px;
+        -webkit-box-shadow: 0px 10px 40px -10px rgba(0, 0, 0, 0.7);
+        -moz-box-shadow: 0px 10px 40px -10px rgba(0, 0, 0, 0.7);
+        box-shadow: 0px 10px 40px -10px rgba(0, 0, 0, 0.7);
+      } 
+      .myRightCtn header {
+        color: #fff;
+        font-size: 29px;
+      }
+      .box {
+        position: relative;
+        margin: 20px;
+        margin-bottom: 100px;
+      } 
+      .myLeftCtn .myInput {
+        width: 298px;
+        border-radius: 25px;
+        padding: 10px;
+        padding-left: 50px;
+        border: none;
+        -webkit-box-shadow: 0px 10px 49px -14px rgba(0, 0, 0, 0.7);
+        -moz-box-shadow: 0px 10px 49px -14px rgba(0, 0, 0, 0.7);
+        box-shadow: 0px 10px 49px -14px rgba(0, 0, 0, 0.7);
+        margin-top: 2px;
+      }
+      .myLeftCtn .myInput:focus {
+        outline: none;
+      } 
+      .myForm {
+        position: relative;
+        margin-top: 50px;
+      } 
+      .myLeftCtn .butt {
+        background: linear-gradient(45deg, #8f6e4c, #caad8d);
+        color: #fff;
+        width: 298px;
+        border: none;
+        margin-left: -27px;
+        border-radius: 25px;
+        padding: 10px;
+        -webkit-box-shadow: 0px 10px 41px -11px rgba(0, 0, 0, 0.7);
+        -moz-box-shadow: 0px 10px 41px -11px rgba(0, 0, 0, 0.7);
+        box-shadow: 0px 10px 41px -11px rgba(0, 0, 0, 0.7);
+      } 
+      .myLeftCtn .butt:hover {
+        background: linear-gradient(45deg, #8f6e4c, #caad8d);
+      }
+      .myLeftCtn .butt:focus {
+        outline: none;
+      } 
+      .myLeftCtn .fas {
+        position: relative;
+        color: #1f2940;
+        left: 36px;
+      } 
+      .butt_out {
+        background: transparent;
+        color: #fff;
+        width: 120px;
+        border: 2px solid#fff;
+        border-radius: 25px;
+        padding: 10px;
+        -webkit-box-shadow: 0px 10px 49px -14px rgba(0, 0, 0, 0.7);
+        -moz-box-shadow: 0px 10px 49px -14px rgba(0, 0, 0, 0.7);
+        box-shadow: 0px 10px 49px -14px rgba(0, 0, 0, 0.7);
+      } 
+      .butt_out:hover {
+        border: 2px solid#eecbff;
+      } 
+      .butt_out:focus {
+        outline: none;
+      }
+      .checkbox-primary{
+        color:#1f2940
+      }
+      .checkbox-wrap {
+    display: block;
+    position: relative;
+    padding-left: 90px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    margin-left: 104px;
+}
+.form-group{
+    margin-bottom: 8%;
+    margin-left: -49px;
+
+}
+img{
+  margin-bottom: 10%;
+  margin-right: 23%;
+}
+.img-footer{
+  width: 86px;
+    margin-left: 84px;
+    margin-top: 6px;
+    
+}
+.img-footer2{
+  width: 86px;
+  margin-left: 173px;
+    margin-top: -84px;
+}
+
+ .for-login .page-card, .for-signup .page-card {
+    max-width: 400px;
+    margin: 0 auto;
+    border-radius: var(--border-radius-md);
+    margin-left: 5%;
+    box-shadow: none !important;
+    padding-left: 14% !important;
+    background: none !important;
+}
+
+.for-login .page-card form, .for-signup .page-card form {
+    max-width: 320px !important;
+    margin: 0 auto !important;
+    padding-left: 27% !important;
+    width: 19vw !important;
+}
+
+.btn.btn-primary {
+    background:linear-gradient(45deg, #438047, #467C4A) !important;
+    color: var(--white);
+    white-space: nowrap;
+    --icon-stroke: currentColor;
+    --icon-fill-bg: var(--primary);
+}
+
+.for-email-login .page-card, .for-forgot .page-card, .for-login .page-card, .for-signup .page-card {
+    max-width: 400px;
+    margin: 0 auto;
+    border-radius: var(--border-radius-md);
+    margin-right: 58% !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    margin-right: 69% !important;
+    width: 37% !important;
+}
+
+.container {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    width: 67vw !important;
+}
+
+.web-footer {
+    padding: 5rem 0;
+    min-height: 140px;
+    display: none !important;
+}
+
+.page-card-head, .for-login .page-card-head, .for-signup .page-card-head {
+    text-align: center;
+    font-size: var(--text-xl);
+    font-weight: 600;
+    margin: 0 auto 2.5rem;
+    margin-top: -12vh !important;
+}
+
+.for-email-login, .for-forgot, .for-login, .for-signup {
+    padding: Max(15vh,70px) 0;
+    padding-right: 31% !important;
+}
+
+h4, .h4 {
+    
+    width: 16vw !important;
+}
+
+.form-group {
+    
+    margin-left: -49px;
+}
+    
+    .page-card-head img, .for-signup .page-card-head img {
+    max-height: 56px !important;
+    margin-bottom: var(--margin-lg,30px);
+    margin-left: 92% !important;
+}  
+
+.btn.btn-primary {
+    background-color: var(--primary);
+    color: var(--white);
+    white-space: nowrap;
+    --icon-stroke: currentColor;
+    --icon-fill-bg: var(--primary);
+    height: 34px !important;
+    margin-left:-28px !important;
+   
+}
+/* } */
+
+.for-login .page-card .page-card-actions, .for-signup .page-card .page-card-actions {
+    margin-top: var(--margin-lg);
+    width: 100% !important;
+    margin-left: -11% !important;
+}
+
+.for-email-login .page-card .page-card-body .field-icon, .for-forgot .page-card .page-card-body .field-icon, .for-login .page-card .page-card-body .field-icon, .for-signup .page-card .page-card-body .field-icon {
+    stroke: #f4f5f6, !important;
+    fill: #f4f5f6 !important;
+}
+.page-card-head img, .for-signup .page-card-head img {
+    max-height: 56px !important;
+    margin-bottom: var(--margin-lg,30px);
+    margin-left: 92% !important;
+}
+
+
+.for-forgot>.page-card {
+  
+    margin-left: 120px !important;
+}
+.for-forgot.page-card.form-forgot.page-card-body.email-field {
+    position: relative;
+    width: 246px;
+    margin-left: -27px;
+}
+.for-forgot .page-card-head h4 {
+    font-size: var(--text-xl);
+    color: var(--text-color);
+    margin-left: -72px !important;
+}
+ .for-forgot >.page-card>.form-forgot>.page-card-body>.email-field{
+    position: relative;
+    width: 100% !important;
+    margin-left: -11% !important;
+}
+.for-forgot .sign-up-message a {
+    color: #030f29 !important;
+}
+.page-card {
+    background: transparent !important;
+}
+
+
+.my-4>.page_content>.page-card  {
+    
+     margin-right: 55%;
+    box-shadow: none;
+    border: none;
+    margin-top:12%;
+}
+.my-4>.page_content>.page-card>.page-card-body> div  {
+    
+     margin-left: 44% !important;
+    
+}
+.my-4>.page_content>.page-card>.page-card-body> div> a  {
+    
+    width: 37%;
+}
+.my-4>.page_content>.page-card>.page-card-body> p  {
+    
+   margin-left:24%;
+}
+
+    
+main.container.my-4 {
+     margin-left: -322px !important;
+    padding-left: 410px !important;
+}
+
+@media screen and (max-width: 600px) {
+  .for-login {
+    background-color: #fff !important;
+    display: block !important;
+    /* margin-top: 487px; */
+    margin-left: -70px !important;
+    width: 201px !important;
+    height: 374px !important;
+    margin-top: -28px !important;
+    border-radius: 25px !important;
+
+}
+.myRightCtn {
+    margin-left: 101px !important;
+    width: 203px !important;
+    height: 381px !important;
+    margin-top: -12px !important;
+    padding-top:82px !important;
+}
+  .form-group {
+    margin-left: -26px !important;
+    width: 164px !important;
+}
+ h4 {
+    margin-left: 40px !important;
+    font-size: 15px;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    width: 78px !important;
+}
+  header{
+    margin-left: 40px !important;
+    font-size: 23px !important;
+    width: 172px !important;
+    padding-left:23px !important;
+  }
+  p{
+    font-size: 9px !important;
+  }
+ 
+ p.forgot-password-message {
+    
+    width: 148px !important;
+}
+img.app-logo {
+    margin-left: 59px !important;
+    max-width: 60px !important;
+    padding-right: 13px;
+}
+.btn.btn-primary {
+   
+    width: 91px !important;
+    margin-left: 31px !important;
+}
+.box {
+    
+    padding-bottom: 8px !important;
+}
+img {
+    max-width: 59% !important;
+    margin-left: 44px !important;
+    margin-right:-22px !important;
+}
+  .myCard {
+    
+    height: 53%;
+    
+}
+.for-forgot .page-card form {
+    max-width: 320px;
+    margin: 0 auto;
+    width: 297% !important;
+    margin-left: -99px !important;
+}
+.for-forgot {
+    background: #fff !important;
+    height: 244px;
+    margin-top: 9px;
+    border-radius: 25px;
+}
+.for-forgot .page-card-head h4 {
+    
+    padding-left: 77px !important;
+}
+.for-forgot >.page-card>.form-forgot>.page-card-body>.email-field {
+    position: relative;
+    width: 100% !important;
+    margin-left: 0% !important;
+}
+center.log{
+margin-left:50px !important;
+}
+a.log2{
+    margin-left:-118px !important;
+}
+a.log3{
+    margin-left:2% !important;
+}
+
+}
+</style>
+</head>
+<body> 
+    <div class="container">
+        <div class="myCard">
+            <div class="row">
+                <div class="col-md-6 login">
+                  
+                </div> 
+                
+                <div class="col-md-6">
+                    <div class="myRightCtn">
+                            <div class="box" style="margin-bottom: -16px;padding-left: 58px;"><header style="margin-left: 0px;padding-left: 3px;">Welcome to VFG</header>
+                            
+                           <p style=" margin-left: 4px;margin-bottom: 155px;">Use your credentials to access your account.</p>
+                           <p style="margin-top: 135px;margin-bottom: 0px;"> Accredited By FTA</p>
+<a target="_blank" href="https://tax.gov.ae/en/tax.support/tax.accounting.software.vendors/accredited.tax.accounting.software.vendors.aspx" title="FTA">
+                        <img src="https://tax.gov.ae/en/images/header/logo-fta.png" class="mainlogo" title="FTA" alt="FTA">
+                    </a>
+
+      
+   <!--<img src="https://vfg.tboss.info/files/instagram-icon.png" alt="" style="width: 31px;height: 27px;">-->
+</a>
+   </div>
+</center>
+</div>
+
+                            </div>
+                            </div>
+                                
+                    </div>
+                </div>
+            </div>
+        </div>
+      
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</body>
+
+</html>

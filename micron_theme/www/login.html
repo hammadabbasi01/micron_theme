@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign in · SPARK 360</title>
+<meta name="description" content="Secure sign-in to SPARK 360 — the connected operating system for modern enterprises.">
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ==========================================================================
+   0. DESIGN TOKENS
+   ========================================================================== */
+:root{
+  --primary:        #2563EB;
+  --primary-600:    #1D4ED8;
+  --secondary:      #4F46E5;
+  --bg:             #F8FAFC;
+  --surface:        #FFFFFF;
+  --border:         #CBD5E1;
+  --text:           #0F172A;
+  --text-secondary: #64748B;
+  --success:        #22C55E;
+  --warning:        #F59E0B;
+  --danger:         #EF4444;
+
+  --primary-a10: rgba(37,99,235,.10);
+  --primary-a20: rgba(37,99,235,.20);
+  --secondary-a20: rgba(79,70,229,.20);
+
+  --radius-lg: 22px;
+  --radius-md: 16px;
+  --radius-sm: 10px;
+  --ease: cubic-bezier(.22,.61,.36,1);
+
+  /* Illustration-panel palette — soft sky, matches the module-map moodboard */
+  --sky-1: #EAF1FB;
+  --sky-2: #DCE8F7;
+  --sky-3: #CFE0F5;
+
+  /* Module accent colors */
+  --mod-hr:    #4F46E5;
+  --mod-sales: #16A34A;
+  --mod-stock: #D97706;
+  --mod-buy:   #7C3AED;
+  --mod-crm:   #2563EB;
+
+  --font-display: "Plus Jakarta Sans", "Inter", sans-serif;
+  --font-body: "Inter", sans-serif;
+}
+
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  font-family:var(--font-body);
+  color:var(--text);
+  background:var(--bg);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+h1,h2,h3,.display-font{font-family:var(--font-display);}
+a{color:var(--primary); text-decoration:none;}
+
+a:focus-visible, button:focus-visible, input:focus-visible, [tabindex]:focus-visible{
+  outline:2.5px solid var(--primary);
+  outline-offset:3px;
+  border-radius:8px;
+}
+.visually-hidden-focusable:not(:focus){
+  position:absolute!important; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0);
+}
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; }
+}
+
+/* ==========================================================================
+   1. PAGE SHELL — illustration LEFT, auth RIGHT
+   ========================================================================== */
+.login-shell{
+  display:grid;
+  grid-template-columns: 62% 38%;
+  min-height:100vh;
+  width:100%;
+}
+@media (max-width: 1200px){
+  .login-shell{ grid-template-columns: 56% 44%; }
+}
+@media (max-width: 992px){
+  .login-shell{ grid-template-columns: 1fr; grid-template-rows: 300px auto; }
+}
+@media (max-width: 640px){
+  .login-shell{ grid-template-rows: auto; }
+  .showcase-panel{ display:none; }
+  .auth-panel{
+    background:
+      radial-gradient(120% 90% at 20% -10%, rgba(37,99,235,.14), transparent 60%),
+      radial-gradient(120% 90% at 100% 0%, rgba(79,70,229,.12), transparent 55%),
+      var(--bg);
+  }
+}
+
+/* ==========================================================================
+   2. LEFT PANEL — Module-map illustration (light, image-inspired)
+   ========================================================================== */
+.showcase-panel{
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(70% 55% at 25% 20%, #ffffff 0%, transparent 60%),
+    linear-gradient(150deg, var(--sky-1), var(--sky-2) 55%, var(--sky-3));
+}
+@media (max-width:992px){ .showcase-panel{ min-height:300px; } }
+
+.bg-decor{ position:absolute; inset:0; pointer-events:none; }
+.soft-cloud{
+  position:absolute; border-radius:50%; filter:blur(45px);
+  background:#ffffff; opacity:.55;
+  animation:cloud-drift 16s var(--ease) infinite;
+}
+.cloud-1{ width:220px; height:220px; top:4%; left:6%; }
+.cloud-2{ width:180px; height:180px; bottom:8%; right:8%; animation-delay:-6s; opacity:.4; }
+@keyframes cloud-drift{ 0%,100%{ transform:translate(0,0); } 50%{ transform:translate(18px,-14px); } }
+
+.sparkle{
+  position:absolute; color:#fff; opacity:.9;
+  animation:sparkle-twinkle 3.4s ease-in-out infinite;
+}
+@keyframes sparkle-twinkle{ 0%,100%{ opacity:.35; transform:scale(.85) rotate(0deg); } 50%{ opacity:1; transform:scale(1.05) rotate(8deg); } }
+
+/* Heading sits near the very top so the stage + chip row below never fight it for space */
+.showcase-heading{
+    position:absolute;
+    top:4%;
+    left:50%;
+    transform:translateX(-50%);
+    width:min(620px,90%);
+    text-align:center;
+    z-index:20;
+}
+.showcase-heading h2{
+  font-size:1.4rem; font-weight:800; margin:0 0 6px; letter-spacing:-.01em; color:var(--text);
+}
+.showcase-heading p{
+    font-size:1rem;
+    line-height:1.5;
+    color:var(--text-secondary);
+}
+
+@media (max-width:992px){ .showcase-heading{ top:4%; } .showcase-heading h2{
+    font-size:2.1rem;
+    line-height:1.18;
+    margin-bottom:10px;
+} }
+
+/* Stage holding the hub-and-spoke diagram + HTML label callouts, locked to the SVG's aspect
+   ratio so percentage-positioned labels always line up with the artwork underneath.
+   IMPORTANT: every line endpoint, node dot, and label below is derived from the SAME
+   pentagon geometry (center 300,300 · viewBox 600x600) so they can never drift apart.
+   Sits above center so there is always clear room below for the metrics row. */
+.map-stage{
+  position:absolute;
+  left:50%; top:49%;
+  transform:translate(-50%,-50%);
+  width:min(640px, 78%);
+  aspect-ratio: 1 / 1;
+}
+.map-stage svg{ position:absolute; inset:0; width:100%; height:100%; display:block; overflow:visible; }
+
+.node-dot{ animation:node-pulse 2.4s ease-in-out infinite; transform-origin:center; }
+@keyframes node-pulse{ 0%,100%{ opacity:.7; } 50%{ opacity:1; } }
+.flow-line{ stroke-dasharray:5 7; animation:flow-dash 3s linear infinite; }
+@keyframes flow-dash{ to{ stroke-dashoffset:-120; } }
+.ping-ring{ animation:ping-out 3s var(--ease) infinite; transform-origin:300px 300px; }
+@keyframes ping-out{ 0%{ opacity:.5; transform:scale(.85); } 100%{ opacity:0; transform:scale(1.35); } }
+.way-dot{ animation:node-pulse 2.6s ease-in-out infinite; }
+
+/* Central SPARK360 hub — HTML overlay, pinned dead-center of the stage, sitting on the SVG halo */
+.hub-mark{
+  position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+  z-index:7; display:flex; flex-direction:column; align-items:center; gap:6px;
+  width:132px; text-align:center;
+}
+.hub-icon{
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    background:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 10px 25px rgba(37,99,235,.18);
+}
+.hub-icon img{
+    width:60px;
+    height:60px;
+    object-fit:contain;
+}
+.hub-mark .hub-name{ font-family:var(--font-display); font-weight:800; font-size:1.1rem; letter-spacing:-.01em; color:var(--text); }
+.hub-mark .hub-tag{ font-size:.62rem; font-weight:600; color:var(--text-secondary); text-transform:uppercase; letter-spacing:.05em; }
+
+/* Module label callouts — position + outward direction come from the same angle as the spoke,
+   so the label always sits just beyond its own node with no independent float/translate drift */
+.mod-label{
+  position:absolute;
+  display:flex; align-items:center; gap:7px;
+  padding:7px 12px;
+  background:rgba(255,255,255,.94);
+  border:1px solid rgba(15,23,42,.06);
+  border-radius:11px;
+  box-shadow:0 10px 24px -8px rgba(15,23,42,.18);
+  font-size:.74rem; font-weight:700; color:var(--text);
+  white-space:nowrap;
+  z-index:6;
+  animation:label-pulse 4s ease-in-out infinite;
+}
+@keyframes label-pulse{ 0%,100%{ opacity:.92; } 50%{ opacity:1; } }
+
+.mod-label .mi{
+  width:22px; height:22px; border-radius:7px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center; color:#fff; font-size:.72rem;
+}
+.mod-label .mt{ display:flex; flex-direction:column; line-height:1.15; }
+.mod-label .mt small{ font-weight:600; color:var(--text-secondary); font-size:.62rem; }
+
+/* Positions — % of .map-stage, computed from the pentagon nodes (viewBox 600x600, R=220) */
+.lbl-top{
+    left:50%;
+    top:17%;
+    transform:translate(-50%,-100%);
+}
+.lbl-ur  { left:84.9%; top:38.7%; transform:translate(-14%,-112%); }
+.lbl-lr  { left:71.6%; top:79.7%; transform:translate(-16%,18%); }
+.lbl-ll  { left:28.4%; top:79.7%; transform:translate(-84%,18%); }
+.lbl-ul  { left:15.1%; top:38.7%; transform:translate(-86%,-112%); }
+@media (max-width:1200px){
+  .lbl-ur, .lbl-ul{ transform-origin:top; }
+}
+
+/* Metrics row — sits BELOW the diagram in normal flow, never overlaps the heading or labels */
+.metrics-row{
+  position:absolute;
+  left:50%; bottom:6%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+  justify-content:center;
+  z-index:6;
+  width:min(680px, 92%);
+}
+.stat-chip{
+  display:flex; align-items:center; gap:9px;
+  background:rgba(255,255,255,.9);
+  border:1px solid rgba(15,23,42,.06);
+  border-radius:14px;
+  padding:10px 14px;
+  box-shadow:0 12px 26px -10px rgba(15,23,42,.16);
+}
+.stat-chip .mc-icon{
+  width:30px; height:30px; border-radius:9px; display:flex; align-items:center; justify-content:center;
+  color:#fff; font-size:.85rem; flex-shrink:0;
+}
+.stat-chip .mc-value{ font-family:var(--font-display); font-weight:800; font-size:.9rem; color:var(--text); line-height:1.2; }
+.stat-chip .mc-label{ font-size:.66rem; color:var(--text-secondary); font-weight:600; }
+@media (max-width:992px){ .metrics-row{ display:none; } }
+@media (max-width:640px){ .showcase-panel{ display:none; } }
+@media (max-width:992px){ .mod-label{ font-size:.66rem; padding:5px 9px; } .mod-label .mi{ width:18px; height:18px; } }
+
+/* ==========================================================================
+   3. RIGHT PANEL — Authentication
+   ========================================================================== */
+.auth-panel{
+  position:relative;
+  background:var(--bg);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:48px 32px;
+}
+.auth-card{ width:100%; max-width:420px; animation: rise-in .7s var(--ease) both; }
+@keyframes rise-in{ from{ opacity:0; transform:translateY(14px); } to{ opacity:1; transform:translateY(0); } }
+
+.brand-row{ display:flex; align-items:center; gap:12px; margin-bottom:40px; }
+.brand-mark{
+    width:100px;
+    height:100px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:transparent;
+    box-shadow:none;
+    border:none;
+    padding:0;
+}
+
+.brand-mark img{
+    width:100px;
+    height:100px;
+    object-fit:contain;
+}
+.brand-name{ font-family:var(--font-display); font-weight:700; font-size:1.05rem; color:var(--text); letter-spacing:-.01em; }
+.brand-sub{ font-size:.72rem; color:var(--text-secondary); letter-spacing:.06em; text-transform:uppercase; font-weight:600; }
+
+.welcome-heading{ font-size:1.85rem; font-weight:800; letter-spacing:-.02em; margin:0 0 8px; color:var(--text); }
+.welcome-sub{ color:var(--text-secondary); font-size:.97rem; margin:0 0 34px; line-height:1.5; }
+
+.form-field{ margin-bottom:20px; }
+.form-label{ font-size:.82rem; font-weight:600; color:var(--text); margin-bottom:7px; display:block; }
+.input-wrap{ position:relative; }
+.form-control-custom{
+  width:100%; padding:13px 16px; font-size:.95rem; font-family:var(--font-body); color:var(--text);
+  background:var(--surface); border:1.5px solid var(--border); border-radius:var(--radius-sm);
+  transition:border-color .2s var(--ease), box-shadow .2s var(--ease), background .2s var(--ease);
+}
+.form-control-custom::placeholder{ color:#94A3B8; }
+.form-control-custom:focus{ outline:none; border-color:var(--primary); box-shadow:0 0 0 4px var(--primary-a10); }
+.input-wrap.has-icon .form-control-custom{ padding-left:44px; }
+.input-icon{ position:absolute; left:15px; top:50%; transform:translateY(-50%); color:var(--text-secondary); font-size:1rem; pointer-events:none; transition:color .2s var(--ease); }
+.input-wrap:has(.form-control-custom:focus) .input-icon{ color:var(--primary); }
+
+.pw-toggle{
+  position:absolute; right:6px; top:50%; transform:translateY(-50%);
+  background:none; border:none; color:var(--text-secondary);
+  width:36px; height:36px; border-radius:8px;
+  display:flex; align-items:center; justify-content:center; cursor:pointer; transition:color .2s, background .2s;
+}
+.pw-toggle:hover{ background:var(--primary-a10); color:var(--primary); }
+
+.field-row-between{ display:flex; align-items:center; justify-content:space-between; margin:-4px 0 26px; }
+.remember-check{ display:flex; align-items:center; gap:9px; cursor:pointer; font-size:.86rem; color:var(--text-secondary); user-select:none; }
+.remember-check input{ width:17px; height:17px; accent-color:var(--primary); cursor:pointer; border-radius:5px; }
+.forgot-link{ font-size:.86rem; font-weight:600; color:#60A5FA; transition:color .2s; }
+.forgot-link:hover{ color:#3B82F6; text-decoration:underline; }
+
+.btn-signin{
+  position:relative; width:100%; padding:14px 18px; border:none; border-radius:var(--radius-sm);
+  background:linear-gradient(135deg,#93C5FD,#60A5FA,#3B82F6); box-shadow:0 12px 30px rgba(59,130,246,.28); color:#fff; font-weight:700; font-size:.97rem;
+  letter-spacing:.01em; cursor:pointer; overflow:hidden; isolation:isolate;
+  display:flex; align-items:center; justify-content:center; gap:10px;
+  box-shadow:0 10px 24px -8px var(--primary-a20);
+  transition:transform .15s var(--ease), box-shadow .2s var(--ease);
+}
+.btn-signin:hover{ transform:translateY(-1px); box-shadow:0 14px 30px -8px var(--secondary-a20); }
+.btn-signin:active{ transform:translateY(0); }
+.ripple{ position:absolute; border-radius:50%; background:rgba(255,255,255,.45); transform:scale(0); animation:ripple-anim .6s var(--ease) forwards; z-index:-1; }
+@keyframes ripple-anim{ to{ transform:scale(3.2); opacity:0; } }
+.spinner{ width:16px; height:16px; border-radius:50%; border:2px solid rgba(255,255,255,.4); border-top-color:#fff; animation:spin .7s linear infinite; display:none; }
+.btn-signin.is-loading .spinner{ display:inline-block; }
+.btn-signin.is-loading .btn-label{ opacity:.85; }
+@keyframes spin{ to{ transform:rotate(360deg); } }
+
+.divider-row{ display:flex; align-items:center; gap:12px; margin:26px 0 20px; color:var(--text-secondary); font-size:.78rem; }
+.divider-row::before, .divider-row::after{ content:""; flex:1; height:1px; background:var(--border); }
+
+.sso-row{ display:flex; gap:10px; }
+.btn-sso{
+  flex:1; display:flex; align-items:center; justify-content:center; gap:8px; padding:11px; border-radius:var(--radius-sm);
+  border:1.5px solid var(--border); background:var(--surface); font-size:.86rem; font-weight:600; color:var(--text-secondary);
+  cursor:not-allowed; opacity:.55;
+}
+.btn-sso i{ font-size:1rem; }
+
+.auth-footer{ margin-top:38px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px; font-size:.75rem; color:var(--text-secondary); }
+.auth-footer .tag{ display:inline-flex; align-items:center; gap:6px; padding:3px 9px; border-radius:20px; background:var(--primary-a10); color:var(--primary-600); font-weight:600; font-size:.7rem; }
+.auth-footer .links a{ color:var(--text-secondary); margin-left:14px; }
+.auth-footer .links a:hover{ color:var(--primary); }
+</style>
+</head>
+<body>
+
+<a class="visually-hidden-focusable" href="#login-form">Skip to sign-in form</a>
+
+<div class="login-shell">
+
+  <!-- ======================= LEFT: MODULE-MAP ILLUSTRATION ======================= -->
+  <aside class="showcase-panel" aria-hidden="true">
+
+    <div class="bg-decor">
+      <div class="soft-cloud cloud-1"></div>
+      <div class="soft-cloud cloud-2"></div>
+      <svg class="sparkle" style="top:8%; left:88%; width:22px; height:22px;" viewBox="0 0 24 24"><path fill="currentColor" d="M12 0l2 8 8 2-8 2-2 8-2-8-8-2 8-2z" opacity=".8" style="color:#2563EB"/></svg>
+      <svg class="sparkle" style="top:70%; left:6%; width:16px; height:16px; animation-delay:-1.5s;" viewBox="0 0 24 24"><path fill="#4F46E5" d="M12 0l2 8 8 2-8 2-2 8-2-8-8-2 8-2z" opacity=".7"/></svg>
+      <svg class="sparkle" style="top:34%; left:4%; width:12px; height:12px; animation-delay:-2.4s;" viewBox="0 0 24 24"><path fill="#22D3EE" d="M12 0l2 8 8 2-8 2-2 8-2-8-8-2 8-2z" opacity=".65"/></svg>
+    </div>
+
+    <div class="showcase-heading">
+      <h2>Every module, one connected platform</h2>
+      <p>HR, sales, stock, buying and CRM — all synced through SPARK360.</p>
+    </div>
+
+    <div class="map-stage" id="mapStage">
+      <!-- All coordinates below share one pentagon geometry: center (300,300), hub radius 75,
+           waypoint radius 150, node radius 220, viewBox 600x600. Lines end exactly where node
+           dots sit, waypoint dots sit exactly at radius 150 along the same spoke angle, and
+           every label's % position is the same node coordinate — nothing here is eyeballed. -->
+      <svg viewBox="0 0 600 600" role="img" aria-label="Diagram of SPARK360 connected to the HR, Sales, Stock, Buying and CRM modules">
+        <defs>
+          <linearGradient id="gPlate" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#E7EEF9"/>
+          </linearGradient>
+        </defs>
+
+        <!-- soft ground shadow beneath the whole diagram -->
+        <ellipse cx="300" cy="330" rx="270" ry="230" fill="url(#gPlate)" opacity=".55"/>
+
+        <!-- outer dashed orbit + inner soft halo behind the hub, matching the reference look -->
+        <circle cx="300" cy="300" r="220" fill="none" stroke="#93B4E8" stroke-width="1" stroke-dasharray="2 8" opacity=".3"/>
+        <circle cx="300" cy="300" r="145" fill="#FFFFFF" opacity=".55"/>
+        <circle cx="300" cy="300" r="145" fill="none" stroke="#93B4E8" stroke-width="1.2" opacity=".35"/>
+
+        <!-- pulsing signal rings behind the hub -->
+        <circle class="ping-ring" cx="300" cy="300" r="75" fill="none" stroke="#2563EB" stroke-width="2"/>
+        <circle class="ping-ring" cx="300" cy="300" r="75" fill="none" stroke="#4F46E5" stroke-width="2" style="animation-delay:-1.5s"/>
+
+        <!-- spokes: hub edge -> each module node -->
+        <g fill="none" stroke-width="1.8">
+          <path class="flow-line" d="M300,225 L300,80"      stroke="#16A34A" opacity=".45"/>
+          <path class="flow-line" d="M371,277 L509,232" style="animation-delay:-.6s" stroke="#D97706" opacity=".45"/>
+          <path class="flow-line" d="M344,361 L429,478" style="animation-delay:-1.2s" stroke="#7C3AED" opacity=".45"/>
+          <path class="flow-line" d="M256,361 L171,478" style="animation-delay:-1.8s" stroke="#2563EB" opacity=".45"/>
+          <path class="flow-line" d="M229,277 L91,232"  style="animation-delay:-2.4s" stroke="#4F46E5" opacity=".45"/>
+        </g>
+
+        <!-- waypoint dots at radius 150, one per spoke, where the spoke crosses the inner halo -->
+        <circle class="way-dot" cx="300"   cy="150"   r="5" fill="#fff" stroke="#16A34A" stroke-width="2.4"/>
+        <circle class="way-dot" cx="442.5" cy="253.6" r="5" fill="#fff" stroke="#D97706" stroke-width="2.4" style="animation-delay:-.5s"/>
+        <circle class="way-dot" cx="387.95" cy="421.4" r="5" fill="#fff" stroke="#7C3AED" stroke-width="2.4" style="animation-delay:-1s"/>
+        <circle class="way-dot" cx="212.05" cy="421.4" r="5" fill="#fff" stroke="#2563EB" stroke-width="2.4" style="animation-delay:-1.5s"/>
+        <circle class="way-dot" cx="157.5" cy="253.6" r="5" fill="#fff" stroke="#4F46E5" stroke-width="2.4" style="animation-delay:-2s"/>
+
+        <!-- module node dots -->
+        <circle class="node-dot" cx="300" cy="80"  r="8" fill="#16A34A"/>
+        <circle class="node-dot" cx="509" cy="232" r="8" fill="#D97706" style="animation-delay:-.5s"/>
+        <circle class="node-dot" cx="429" cy="478" r="8" fill="#7C3AED" style="animation-delay:-1s"/>
+        <circle class="node-dot" cx="171" cy="478" r="8" fill="#2563EB" style="animation-delay:-1.5s"/>
+        <circle class="node-dot" cx="91"  cy="232" r="8" fill="#4F46E5" style="animation-delay:-2s"/>
+      </svg>
+
+      <!-- SPARK360 hub mark, pinned dead-center -->
+      <div class="hub-mark">
+        <div class="hub-icon" aria-hidden="true"><img src="/assets/micron_theme/images/spark_logo.png" alt="SPARK360 Logo"></div>
+        <!-- <div class="hub-name">SPARK360</div> -->
+        <div class="hub-tag">ERP System</div>
+      </div>
+
+      <!-- Module label callouts — each pinned to its own node's exact coordinate -->
+      <div class="mod-label lbl-top">
+        <span class="mi" style="background:var(--mod-sales);"><i class="bi bi-graph-up-arrow"></i></span>
+        <span class="mt">Sales &amp; Analytics <small>Performance Suite</small></span>
+      </div>
+      <div class="mod-label lbl-ur">
+        <span class="mi" style="background:var(--mod-stock);"><i class="bi bi-boxes"></i></span>
+        <span class="mt">Stock Module <small>Inventory &amp; Logistics</small></span>
+      </div>
+      <div class="mod-label lbl-lr">
+        <span class="mi" style="background:var(--mod-buy);"><i class="bi bi-bag-check-fill"></i></span>
+        <span class="mt">Buying Module <small>Procurement</small></span>
+      </div>
+      <div class="mod-label lbl-ll">
+        <span class="mi" style="background:var(--mod-crm);"><i class="bi bi-people-fill"></i></span>
+        <span class="mt">CRM Module <small>Customer Relationship Mgmt</small></span>
+      </div>
+      <div class="mod-label lbl-ul">
+        <span class="mi" style="background:var(--mod-hr);"><i class="bi bi-person-badge-fill"></i></span>
+        <span class="mt">HR Module <small>Human Resources</small></span>
+      </div>
+    </div>
+
+    <!-- Metrics row — now a clean horizontal row BELOW the diagram, never overlapping labels/heading -->
+    <div class="metrics-row">
+      <div class="stat-chip">
+        <span class="mc-icon" style="background:var(--mod-crm);"><i class="bi bi-arrow-repeat"></i></span>
+        <div><div class="mc-value">Real-time</div><div class="mc-label">Data sync</div></div>
+      </div>
+      <div class="stat-chip">
+        <span class="mc-icon" style="background:var(--mod-stock);"><i class="bi bi-shield-check"></i></span>
+        <div><div class="mc-value">99.98%</div><div class="mc-label">Uptime</div></div>
+      </div>
+      <div class="stat-chip">
+        <span class="mc-icon" style="background:var(--mod-sales);"><i class="bi bi-check2-circle"></i></span>
+        <div><div class="mc-value">Cloud Sync</div><div class="mc-label">Always Connected</div></div>
+      </div>
+    </div> 
+  </aside>
+
+  <!-- ======================= RIGHT: AUTH PANEL ======================= -->
+  <main class="auth-panel" aria-label="Sign in">
+    <div class="auth-card">
+
+      <div class="brand-row">
+        <div class="brand-mark" aria-hidden="true"><img src="/assets/micron_theme/images/spark_logo.png" alt="SPARK360 Logo"></i></div>
+        <div>
+          <div class="brand-name">SPARK 360</div>
+          <div class="brand-sub">Smart Business ERP</div>
+        </div>
+      </div>
+
+      <h1 class="welcome-heading">Welcome back</h1>
+      <p class="welcome-sub">Sign in to access your ERP System.</p>
+
+      <form id="login-form" novalidate>
+
+        <div class="form-field">
+          <label class="form-label" for="email">Username or email</label>
+          <div class="input-wrap has-icon">
+            <i class="bi bi-person-fill input-icon" aria-hidden="true"></i>
+            <input class="form-control-custom" type="text" id="email" name="email"
+                   autocomplete="username" placeholder="you@company.com" required
+                   aria-required="true">
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="password">Password</label>
+          <div class="input-wrap has-icon">
+            <i class="bi bi-lock-fill input-icon" aria-hidden="true"></i>
+            <input class="form-control-custom" type="password" id="password" name="password"
+                   autocomplete="current-password" placeholder="Enter your password" required
+                   aria-required="true" style="padding-right:44px;">
+            <button type="button" class="pw-toggle" id="pwToggle" aria-label="Show password" aria-pressed="false">
+              <i class="bi bi-eye" id="pwToggleIcon" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:flex-end;margin:-4px 0 26px;">
+          
+          <a class="forgot-link" href="#forgot">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="btn-signin" id="signInBtn">
+          <span class="spinner" aria-hidden="true"></span>
+          <span class="btn-label">Sign in</span>
+          <i class="bi bi-arrow-right" aria-hidden="true"></i>
+        </button>
+
+        
+  </main>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var pwInput = document.getElementById('password');
+  var pwToggle = document.getElementById('pwToggle');
+  var pwIcon = document.getElementById('pwToggleIcon');
+  pwToggle.addEventListener('click', function(){
+    var show = pwInput.type === 'password';
+    pwInput.type = show ? 'text' : 'password';
+    pwIcon.className = show ? 'bi bi-eye-slash' : 'bi bi-eye';
+    pwToggle.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
+    pwToggle.setAttribute('aria-pressed', show ? 'true' : 'false');
+  });
+
+  var form = document.getElementById('login-form');
+  var btn = document.getElementById('signInBtn');
+
+  btn.addEventListener('click', function(e){
+    var rect = btn.getBoundingClientRect();
+    var size = Math.max(rect.width, rect.height);
+    var ripple = document.createElement('span');
+    ripple.className = 'ripple';
+    ripple.style.width = ripple.style.height = size + 'px';
+    ripple.style.left = (e.clientX - rect.left - size/2) + 'px';
+    ripple.style.top = (e.clientY - rect.top - size/2) + 'px';
+    btn.appendChild(ripple);
+    setTimeout(function(){ ripple.remove(); }, 650);
+  });
+
+  form.addEventListener("submit", async function(e) {
+
+    e.preventDefault();
+
+    if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+    }
+
+    const username = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+
+    btn.classList.add("is-loading");
+    btn.disabled = true;
+
+    try {
+
+        const response = await fetch("/api/method/login", {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+
+            body: new URLSearchParams({
+                usr: username,
+                pwd: password
+            })
+
+        });
+
+        if (response.ok) {
+
+            btn.querySelector(".btn-label").textContent = "Redirecting...";
+
+            window.location.href = "/app/module-page";
+
+        } else {
+
+            throw new Error("Login failed");
+
+        }
+
+    } catch (err) {
+
+        btn.classList.remove("is-loading");
+        btn.disabled = false;
+
+        btn.querySelector(".btn-label").textContent = "Sign in";
+
+        alert("Invalid Username or Password");
+
+    }
+
+});
+
+  /* Subtle parallax on the module map (desktop only) */
+  var stage = document.getElementById('mapStage');
+  var showcase = document.querySelector('.showcase-panel');
+  if (stage && showcase && window.matchMedia('(min-width: 992px)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    showcase.addEventListener('mousemove', function(e){
+      var r = showcase.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width - 0.5;
+      var y = (e.clientY - r.top) / r.height - 0.5;
+      stage.style.transform = 'translate(' + (-50 + x*1.4) + '%,' + (-50 + y*1.4) + '%)';
+    });
+    showcase.addEventListener('mouseleave', function(){
+      stage.style.transform = 'translate(-50%,-50%)';
+    });
+  }
+})();
+</script>
+</body>
+</html>
